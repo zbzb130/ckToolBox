@@ -1,0 +1,21 @@
+java6()
+{
+  export JAVA_HOME=/home/qinghao/jdk1.6.0_45
+  export PATH=${JAVA_HOME}/bin:$PATH
+  java -version
+}
+java7()
+{
+  export JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64/
+  export PATH=${JAVA_HOME}/bin:$PATH
+  java -version
+}
+if [ -f ./build/envsetup.sh ] && [ ! -f ./mk ]; then
+    source ./build/envsetup.sh
+    lunch "`ls -rt out/target/product/ |tail -n1`-userdebug"
+    if grep -w PLATFORM_VERSION build/core/version_defaults.mk  |grep 5.0; then
+        java7
+    else
+        java6
+    fi
+fi
